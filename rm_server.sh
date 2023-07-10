@@ -1,0 +1,2 @@
+docker stop BoonMoSa_TritonInferenceServer
+docker rm BoonMoSa_TritonInferenceServer
