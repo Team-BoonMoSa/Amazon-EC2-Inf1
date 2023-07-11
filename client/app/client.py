@@ -38,7 +38,7 @@ def letterbox(im, new_shape=(640, 640), color=(114, 114, 114), auto=False, scale
     return im, ratio, (dw, dh)
 
 def Inference(IMAGE_PATH):
-    SERVER_URL = '0.0.0.0:8001'
+    SERVER_URL = 'BoonMoSa_TritonInferenceServer:8001'
     MODEL_NAME = 'BoonMoSa'
 
     dectection_image_path = 'outputs/' + IMAGE_PATH.split('.')[-2] + "-seg.png"
