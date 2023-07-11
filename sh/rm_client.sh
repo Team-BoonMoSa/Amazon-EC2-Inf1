@@ -1,0 +1,2 @@
+docker stop BoonMoSa_FastAPI
+docker rm BoonMoSa_FastAPI

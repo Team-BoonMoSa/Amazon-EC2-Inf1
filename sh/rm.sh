@@ -1,0 +1,4 @@
+docker stop BoonMoSa_TritonInferenceServer
+docker rm BoonMoSa_TritonInferenceServer
+docker stop BoonMoSa_FastAPI
+docker rm BoonMoSa_FastAPI
