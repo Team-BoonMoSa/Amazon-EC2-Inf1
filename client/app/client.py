@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import cv2
 from tritonclient.utils import *
@@ -37,10 +38,12 @@ def letterbox(im, new_shape=(640, 640), color=(114, 114, 114), auto=False, scale
     return im, ratio, (dw, dh)
 
 def Inference(IMAGE_PATH):
-    SERVER_URL = 'localhost:8001'
+    SERVER_URL = '0.0.0.0:8001'
     MODEL_NAME = 'BoonMoSa'
-    dectection_image_path = IMAGE_PATH.split('.')[-2] + "-seg.png"
-    dectection_boxes_path = IMAGE_PATH.split('.')[-2] + "-seg.txt"
+
+    dectection_image_path = 'outputs/' + IMAGE_PATH.split('.')[-2] + "-seg.png"
+    dectection_boxes_path = 'outputs/' + IMAGE_PATH.split('.')[-2] + "-seg.txt"
+    IMAGE_PATH = 'inputs/' + IMAGE_PATH
 
     image = cv2.imread(IMAGE_PATH)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -72,9 +75,9 @@ def Inference(IMAGE_PATH):
         output1 = response.as_numpy("output1")
     return image, r, output0, output1, dectection_image_path, dectection_boxes_path
 
-if __name__ == "__main__":
-    tar = 'test.jpg'
-    image, r, output0, output1, dectection_image_path, dectection_boxes_path = Inference(tar)
+def main(IMAGE_PATH):
+    START = time.time()
+    image, r, output0, output1, dectection_image_path, dectection_boxes_path = Inference(IMAGE_PATH)
     results = output0.copy()
     protos = output1.copy()
     overlay = image.copy()
@@ -106,8 +109,6 @@ if __name__ == "__main__":
         _, score, _, class_id = cv2.minMaxLoc(scores[i])
         class_id = class_id[1]
         if score >= CONF_THRESHOLD:
-            with open(dectection_boxes_path, "w", encoding="utf8") as f:
-                f.write(str(round(class_id)) + "," + ",".join([str(x) for x in bbox]) + "\n")
             c = bbox[:2]
             h = bbox[2:]
             p1, p2 = c, (c + h)
@@ -128,3 +129,9 @@ if __name__ == "__main__":
         alpha = 0.5
         image = cv2.addWeighted(image, 1 - alpha, overlay, alpha, 0)
         cv2.imwrite(dectection_image_path, image[:, :, ::-1])
+    END = time.time()
+    return END - START
+
+
+if __name__ == "__main__":
+    main("test.png")
