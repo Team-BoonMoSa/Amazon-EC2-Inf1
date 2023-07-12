@@ -1,32 +1,3 @@
-![local](https://github.com/Team-BoonMoSa/.github/assets/42334717/74184fdc-5d7d-4daf-9a39-e079b93af1b3)
+![Amazon_EC2_Inf1](https://github.com/Zerohertz/Zerohertz/assets/42334717/48b8575a-6ade-4cb6-bdda-4c26b7a01845)
 
----
-
-# Setup
-
-```
-.
-├── ...
-├── server
-│   ├── Dockerfile
-│   └── model-repository
-│       └── BoonMoSa
-│           ├── 1
-│           │   └── model.onnx -> 학습된 모델로 교체!
-│           └── config.pbtxt
-├── client
-│   ├── Dockerfile
-│   ├── app
-│   │   ├── app.py
-│   │   ├── client.py
-│   │   └── requirements.txt
-│   ├── inputs
-│   │   └── test.png
-│   └── outputs
-│       └── test-seg.png
-└── docker-compose.yaml
-```
-
-```shell
-$ docker compose up -d
-```
+Developing...
