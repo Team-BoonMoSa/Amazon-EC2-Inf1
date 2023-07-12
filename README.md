@@ -1,3 +1,7 @@
+![local](https://github.com/Team-BoonMoSa/.github/assets/42334717/74184fdc-5d7d-4daf-9a39-e079b93af1b3)
+
+---
+
 # Setup
 
 ```shell
@@ -15,14 +19,8 @@ $ pip install -r requirements.txt
         └── config.pbtxt
 ```
 
----
-
 # Build Triton Inference Server
 
 ```shell
-$ sh build_server.sh
-```
-
-```shell
-$ sh rm_server.sh
+$ docker compose up -d
 ```
