@@ -27,8 +27,6 @@
 └── docker-compose.yaml
 ```
 
-# Build Triton Inference Server
-
 ```shell
 $ docker compose up -d
 ```
