@@ -7,7 +7,7 @@ services:
       dockerfile: ./server/Dockerfile
     container_name: BoonMoSa_TritonInferenceServer
     volumes:
-      - ${PWD}/server/model-repository:/model-repository
+      - /home/ec2-user/Amazon-EC2-Inf1/server/model-repository:/model-repository
     command: tritonserver --model-repository=/model-repository --strict-model-config=false --log-verbose=1 --backend-config=python,grpc-timeout-milliseconds=50000
     ports:
       - 8000:8000
@@ -22,8 +22,8 @@ services:
       dockerfile: ./client/Dockerfile
     container_name: BoonMoSa_FastAPI
     volumes:
-      - ${PWD}/client/inputs:/app/inputs
-      - ${PWD}/client/outputs:/app/outputs
+      - /home/ec2-user/Amazon-EC2-Inf1/client/inputs:/app/inputs
+      - /home/ec2-user/Amazon-EC2-Inf1/client/outputs:/app/outputs
     ports:
       - 80:80
 
