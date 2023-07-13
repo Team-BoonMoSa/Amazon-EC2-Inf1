@@ -1,5 +1,5 @@
 name: "BoonMoSa"
-platform: "onnxruntime_onnx"
+backend: "python"
 
 input [
     {
