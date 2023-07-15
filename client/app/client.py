@@ -54,14 +54,14 @@ def Inference(IMAGE_PATH):
     input_image = np.ascontiguousarray(input_image)
     with grpcclient.InferenceServerClient(SERVER_URL) as triton_client:
         inputs = [
-            grpcclient.InferInput("images", input_image.shape, np_to_triton_dtype(np.float32))
+            grpcclient.InferInput("images__0", input_image.shape, np_to_triton_dtype(np.float32))
         ]
 
         inputs[0].set_data_from_numpy(input_image)
 
         outputs = [
-            grpcclient.InferRequestedOutput("output0"),
-            grpcclient.InferRequestedOutput("output1")
+            grpcclient.InferRequestedOutput("output__0"),
+            grpcclient.InferRequestedOutput("output__1")
         ]
 
         response = triton_client.infer(
@@ -71,8 +71,8 @@ def Inference(IMAGE_PATH):
                                     )
 
         response.get_response()
-        output0 = response.as_numpy("output0")
-        output1 = response.as_numpy("output1")
+        output0 = response.as_numpy("output__0")
+        output1 = response.as_numpy("output__1")
     return image, r, output0, output1, dectection_image_path, dectection_boxes_path
 
 def main(IMAGE_PATH):
