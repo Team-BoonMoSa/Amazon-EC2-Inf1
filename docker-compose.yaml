@@ -6,15 +6,18 @@ services:
       context: .
       dockerfile: ./server/Dockerfile
     container_name: BoonMoSa_TritonInferenceServer
+    devices:
+      - /dev/neuron0
     volumes:
-      - /home/ec2-user/Amazon-EC2-Inf1/server/model-repository:/model-repository
-    command: tritonserver --model-repository=/model-repository --strict-model-config=false --log-verbose=1 --backend-config=python,grpc-timeout-milliseconds=50000
+      - /home/ubuntu/python_backend:/home/ubuntu/python_backend
+      - /lib/udev:/mylib/udev
+      - /home/ubuntu/Amazon-EC2-Inf1/server/model-repository:/model-repository
+    shm_size: 8g
     ports:
       - 8000:8000
       - 8001:8001
       - 8002:8002
-    shm_size: 4gb
-    pid: host
+    command: tritonserver --model-repository=/model-repository
 
   fastapi:
     build:
@@ -22,8 +25,8 @@ services:
       dockerfile: ./client/Dockerfile
     container_name: BoonMoSa_FastAPI
     volumes:
-      - /home/ec2-user/Amazon-EC2-Inf1/client/inputs:/app/inputs
-      - /home/ec2-user/Amazon-EC2-Inf1/client/outputs:/app/outputs
+      - /home/ubuntu/Amazon-EC2-Inf1/client/inputs:/app/inputs
+      - /home/ubuntu/Amazon-EC2-Inf1/client/outputs:/app/outputs
     ports:
       - 80:80
 
