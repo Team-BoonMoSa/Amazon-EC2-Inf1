@@ -96,7 +96,7 @@ def main(IMAGE_PATH):
 
     CONF_THRESHOLD = 0.03
     IOU_THRESHOLD = 0.5
-    MASK_THRESHOLD = 17.5
+    MASK_THRESHOLD = 0.5
 
     indices = cv2.dnn.NMSBoxes(
         bboxes.tolist(), confidences.tolist(), CONF_THRESHOLD, IOU_THRESHOLD)
@@ -114,9 +114,10 @@ def main(IMAGE_PATH):
             p1, p2 = c, (c + h)
             p1, p2 = p1.astype('int32'), p2.astype('int32')
             cv2.rectangle(image, p1, p2, color, thickness)
+
             x,y,w,h = map(int, bbox * np.array([r[0], r[1], r[0], r[1]]) * 160 / 640)
             proto = protos[0,:,y:y+h,x:x+w].reshape(32, -1)
-            np.expand_dims(masks[i], 0) @ proto
+            proto = np.expand_dims(masks[i], 0) @ proto
             proto = (1 / (1 + np.exp(-proto))).sum(0)
             proto = proto.reshape(h, w)
             mask = cv2.resize(proto, (bbox[2], bbox[3]))
